@@ -8,19 +8,19 @@ import mk.ukim.finki.sharedkernel.domain.base.ValueObject;
 @Embeddable
 @Getter
 public class Distance implements ValueObject {
-    private final double value;
+    private final double length;
     private final DistanceUnit unit;
 
     public Distance() {
-        value = 0.0;
+        length = 0.0;
         unit = DistanceUnit.KILOMETERS;
     }
 
-    public Distance(@NonNull Double value, @NonNull DistanceUnit unit) {
-        if (!isValueValid(value)) {
+    public Distance(@NonNull Double length, @NonNull DistanceUnit unit) {
+        if (!isValueValid(length)) {
             throw new IllegalArgumentException("Distance cannot be negative");
         }
-        this.value = value;
+        this.length = length;
         this.unit = unit;
     }
 
@@ -32,18 +32,18 @@ public class Distance implements ValueObject {
         if (unit == targetUnit) {
             return this;
         }
-        double convertedValue = value * unit.toBaseUnitFactor() / targetUnit.toBaseUnitFactor();
+        double convertedValue = length * unit.toBaseUnitFactor() / targetUnit.toBaseUnitFactor();
         return new Distance(convertedValue, targetUnit);
     }
 
     public Distance add(Distance other) {
         Distance convertedOther = other.toUnit(this.unit);
-        return new Distance(this.value + convertedOther.value, this.unit);
+        return new Distance(this.length + convertedOther.length, this.unit);
     }
 
     public Distance subtract(Distance other) {
         Distance convertedOther = other.toUnit(this.unit);
-        return new Distance(this.value - convertedOther.value, this.unit);
+        return new Distance(this.length - convertedOther.length, this.unit);
     }
 
     @Override
@@ -51,16 +51,16 @@ public class Distance implements ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Distance distance = (Distance) o;
-        return Double.compare(distance.toUnit(this.unit).value, value) == 0;
+        return Double.compare(distance.toUnit(this.unit).length, length) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Double.hashCode(value * unit.toBaseUnitFactor());
+        return Double.hashCode(length * unit.toBaseUnitFactor());
     }
 
     @Override
     public String toString() {
-        return value + " " + unit;
+        return length + " " + unit;
     }
 }

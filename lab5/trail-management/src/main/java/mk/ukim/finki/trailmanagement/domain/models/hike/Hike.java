@@ -1,5 +1,7 @@
 package mk.ukim.finki.trailmanagement.domain.models.hike;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -13,7 +15,9 @@ import java.time.LocalDateTime;
 @Table(name = "hikes")
 @Getter
 public class Hike extends AbstractEntity<HikeId> {
+    @AttributeOverride(name = "id", column = @Column(name = "user_id"))
     private UserId userId;
+    @AttributeOverride(name = "id", column = @Column(name = "trail_id"))
     private TrailId trailId;
     private LocalDateTime date;
 

@@ -10,21 +10,21 @@ import java.util.Objects;
 @Embeddable
 @Getter
 public class Rating implements ValueObject {
-    private final int value;
+    private final double score;
 
     protected Rating() {
-        value = 0;
+        score = 0.0;
     }
 
-    public Rating(@NonNull Integer value) {
-        if (!isValueValid(value)) {
+    public Rating(@NonNull Double score) {
+        if (!isValueValid(score)) {
             throw new IllegalArgumentException("Rating value must be between 0 and 5");
         }
-        this.value = value;
+        this.score = score;
     }
 
-    private boolean isValueValid(int value) {
-        return value > 0 && value <= 5;
+    private boolean isValueValid(double value) {
+        return value > 0.0 && value <= 5.0;
     }
 
     @Override
@@ -32,18 +32,18 @@ public class Rating implements ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rating rating = (Rating) o;
-        return value == rating.value;
+        return score == rating.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(score);
     }
 
     @Override
     public String toString() {
         return "Rating{" +
-                "value=" + value +
+                "value=" + score +
                 '}';
     }
 }

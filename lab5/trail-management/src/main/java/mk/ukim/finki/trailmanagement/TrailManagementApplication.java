@@ -10,4 +10,5 @@ public class TrailManagementApplication {
         SpringApplication.run(TrailManagementApplication.class, args);
     }
 
+
 }
